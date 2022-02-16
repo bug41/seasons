@@ -9,23 +9,18 @@ class App extends React.Component {
         //THIS IS THE ONLY TIME we do direct assignment
         //to this.state
         this.state = { lat: null, long:null, errorMessage:''};
-        window.navigator.geolocation.getCurrentPosition(
-            (position) => 
-            {
-                //we called setstate!!
-                this.setState({lat:position.coords.latitude});
-                this.setState({long:position.coords.longitude});
-                
-            },
-            (err) => {
-                this.setState({errorMessage: err.message})
-            }
-        );
     }
 
     //ONE TIME
     componentDidMount(){
-        console.log('My component was redered to the screen')
+        window.navigator.geolocation.getCurrentPosition(
+            (position) => 
+            {
+                this.setState({lat:position.coords.latitude});
+                this.setState({long:position.coords.longitude});
+            },
+            (err) => this.setState({errorMessage: err.message})
+        );
     }
 
     componentDidUpdate(){
